@@ -1,13 +1,12 @@
 import scipy.sparse as sp
 import time
-import numpy as np
 from numpy.linalg import norm
-EPSILON = np.finfo(np.float32).eps
 import numpy as np
+
+
+
 start_total = time.time()
-
-
-
+EPSILON = np.finfo(np.float32).eps
 def normalize_matrix(matrix):
     total_sum = matrix.sum()
     if total_sum == 0:
