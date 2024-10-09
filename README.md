@@ -26,15 +26,14 @@ Additionally, the following parameters can be customized inside the script-run.p
 ## Evaluation
 The evaluation is performed using two objective metrics:
 
-NMI (Normalized Mutual Information) score
-Purity Score
+1. NMI (Normalized Mutual Information) score
+2. Purity Score
 
 To compare the model's performance against other models, run the evaluation script:
 
 python Evaluation_CNMF.py
 
+
+### Custom Purity Score
 We have implemented a custom purity score to ensure fairness in evaluation, particularly when dealing with imbalanced labels. The custom function excludes majority labels and focuses on minority predicted labels. The function is available in Evaluation_CNMF.py as purity_score_filtered. 
-
-
-
 The Evaluation_CNMF.py script also generates plots to visually demonstrate model performance and comparisons across metrics.
