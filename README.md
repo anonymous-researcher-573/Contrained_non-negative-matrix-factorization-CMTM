@@ -19,7 +19,7 @@ You can customize the following parameters:
 --theta_min: Minimum threshold for theta.
 Additionally, the following parameters can be customized inside the script-run.py file:
 
---MH_indices: List of indices for the MH process.
+--MH_indices: List of indices for the mental health topics.
 --seed_words: List of seed words for guiding topic discovery.
 
 
