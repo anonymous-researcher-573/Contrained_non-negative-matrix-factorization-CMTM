@@ -63,10 +63,10 @@ def parse_args():
     parser.add_argument('--data_path', type=str, default='./synthetic-data.csv', help="Path to input dataset (CSV format)")
     parser.add_argument('--output_path', type=str, default='./final_output.txt', help="Path to save the output results")
     # Algorithm Parameters
-    parser.add_argument('--n_topics', type=int, default=20, help="Number of topics")
+    parser.add_argument('--n_topics', type=int, default=15, help="Number of topics")
     parser.add_argument('--W_max', type=float, default=1e-9, help="Max value for W")
     parser.add_argument('--theta_min', type=float, default=0.4, help="Min value for theta")
-    parser.add_argument('--MH_indices', type=int, nargs='+', default=[0, 1, 2, 3, 4, 5, 6], help="List of Mental Health indices")
+    parser.add_argument('--MH_indices', type=int, nargs='+', default=[0, 1, 2, 3, 4, 5, 6,7], help="List of Mental Health indices")
     parser.add_argument('--max_iteration', type=float, default=40, help="maximum iteration of the training")
     # parser.add_argument('--param_name', type=int, default=some_value, help="Description of param_name")
     return parser.parse_args()
