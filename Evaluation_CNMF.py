@@ -10,9 +10,6 @@ from gensim.models.coherencemodel import CoherenceModel
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from top2vec import Top2Vec
-nltk.download('punkt')
-nltk.download('punkt_tab')
-nltk.download('stopwords')
 from corextopic import corextopic as ct
 from OurAlgorithm import *
 from collections import defaultdict, Counter
