@@ -33,4 +33,8 @@ To evaluate the model's performance, run the `Evaluation.py` script with the fol
 
 python Evaluation.py --data_path "./synthetic-data.csv"
 
+
+
+
 We have implemented a custom purity score to ensure fairness in evaluation, particularly when dealing with imbalanced labels. The custom function excludes majority labels and focuses on minority predicted labels. The function is available in Evaluation.py as purity_score_filtered. 
+In the Evaluation.py file, if you would like to customize different parameters or other SOTA models, feel free to do so. 
