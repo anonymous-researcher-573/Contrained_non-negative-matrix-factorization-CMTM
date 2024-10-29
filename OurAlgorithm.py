@@ -202,17 +202,17 @@ def train(V, n_topics, MH_indices, W_max, zero_seed_indices, seed_indices, theta
     lambda_ = np.zeros(W.shape)
     mu = np.zeros(H.shape)
     kl_losses = []
-    grad_W_norms = []
-    grad_H_norms = []
+    #grad_W_norms = []
+    #grad_H_norms = []
     for i in range(max_iter):
 
         kl_loss = kl_divergence(V, W, H)
         kl_losses.append(kl_loss)
-        grad_W = gradient_W(V, W, H, lambda_, MH_indices, W_max, zero_seed_indices)
-        grad_H = gradient_H(V, W, H, mu, seed_indices, theta_min)
+        #grad_W = gradient_W(V, W, H, lambda_, MH_indices, W_max, zero_seed_indices)
+        #grad_H = gradient_H(V, W, H, mu, seed_indices, theta_min)
 
-        grad_W_norms.append(frobenius_norm(grad_W))
-        grad_H_norms.append(frobenius_norm(grad_H))
+        #grad_W_norms.append(frobenius_norm(grad_W))
+        #grad_H_norms.append(frobenius_norm(grad_H))
 
 
 
