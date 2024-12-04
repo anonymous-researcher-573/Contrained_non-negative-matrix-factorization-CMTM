@@ -229,9 +229,6 @@ def train(V, n_topics, MH_indices, W_max, zero_seed_indices, seed_indices, theta
             print(f"Converged at iteration {i}, KL Divergence: {kl_loss}")
             break
 
-    W = normalize_matrix(W)
-    H = normalize_matrix(H)
-
     return W, H
 
 
