@@ -109,12 +109,9 @@ def kl_divergence(V, W, H):
     V_data[V_data < EPSILON] = EPSILON
 
     sum_WH = np.dot(np.sum(W, axis=0), np.sum(H, axis=1))
-    # computes np.sum(X * log(X / WH)) only where X is nonzero
     div = V_data / WH_data
     res = np.dot(V_data, np.log(div))
-    # add full np.sum(np.dot(W, H)) - np.sum(X)
     res += sum_WH - V_data.sum()
-    #return res
 
     num_documents = V.shape[0]
     num_vocab_terms = V.shape[1]
@@ -180,19 +177,10 @@ def efficient_sparse_dot_with_ones(a, b, dense_output=False):
     return result
 
 def update_W(V, W, H, lambda_, MH_indices, zero_seed_indices):
-    #WH = np.dot(W, H)
     WH =_special_sparse_dot(W, H, V)
     V_WH=_special_sparse_div(V, WH)
     positive_term = safe_sparse_dot(V_WH, H.T)
-    #negative_term = safe_sparse_dot(np.ones(V.shape), H.T)
     negative_term= np.sum(H, axis=1)
-
-
-
-    #print("positive_term in update W: ", positive_term)
-    #print("negative_term in update W : ", negative_term)
-    #print(type(negative_term))
-    #print(type(positive_term))
 
     g1_W = np.zeros_like(W)
 
@@ -200,65 +188,31 @@ def update_W(V, W, H, lambda_, MH_indices, zero_seed_indices):
         if i < W.shape[0]:
             g1_W[i, MH_indices] = 1
 
-    #print("positive_term shape W :", positive_term.shape)
-    #print("negative_term shape H :", negative_term.shape)
-    #print("g1_W shape:", g1_W.shape)
-
     W *= positive_term / (negative_term + lambda_ * g1_W)
-    #W= np.clip(W, 1e-12, None)
-    #write_log_file("update W \n")
     return W
 
 
 def update_H(V, W, H, mu, seed_indices, MH_indices):
-    #WH = np.dot(W, H)
     WH =_special_sparse_dot(W, H, V)
     V_WH=_special_sparse_div(V, WH)
     positive_term = safe_sparse_dot(W.T, V_WH)
     #negative_term = np.dot(W.T, np.ones(V.shape))
     #negative_term = np.sum(W, axis=0)
     negative_term = W.sum(axis=0)
-    #print("positive_term in update H: ", positive_term)
-    #print("negative_term in update H: ", negative_term)
-    #print(type(negative_term))
-    #print(type(positive_term))
 
     num = np.sum(H[:, seed_indices], axis=1, keepdims=True)
     den = np.sum(H, axis=1, keepdims=True)
 
-    #print("denom :", den.shape)
     g2_term = np.zeros_like(H)
     for k in range(H.shape[0]):
         if k in MH_indices:
-            #print(f"Shape of den[k]: {den[k].shape}")
-            #print(f"Shape of num[k]: {num[k].shape}")
-            #print(f"denom: {den}")
             g2_term[k, :] = num[k] / (den[k] ** 2)
             g2_term[k, seed_indices] = -((den[k] - num[k]) / (den[k] ** 2))
-           #print(f"Shape of den[k]: {den[k].shape}")  # Should print ()
-            #g2_term[k, :]=  mu[k]* (num[k] / (den[k] ** 2))
-            #g2_term[k, seed_indices] += mu[k] * (1 / den[k][0])
 
             denominator = negative_term[k] + g2_term[k, seed_indices]
-            #print("denominator values: ", denominator)
-            #print("sum_i W_{ik}: ", negative_term[k])
-            #print("sum_W_ik = W.sum(axis=0)[k]: ", sum_W_ik)
-            #print("-(Den-Num)/(Den)^2 : ", -((den[k] - num[k]) / (den[k] ** 2)))
-            #print("mu value: ", mu)
-
-            #for k in range(H.shape[0]):
-                #print(f"k={k}, sum_i W_ik: {W[:, k].sum()}, -(Den-Num)/(Den)^2: {-(den[k] - num[k]) / (den[k] ** 2)}")
-
-            #if np.any(denominator < 0):
-                #print(f"Warning: Negative denominator detected for k={k}. Fixing...")
-                #print(f"Denominator values: {denominator}")
-
 
     #H *= positive_term / (negative_term + mu * g2_term)   # optimized for large scale dataset by adding (negative_term[:, np.newaxis] instaed of negative_term to match the shape of H
     H *= positive_term / (negative_term[:, np.newaxis] + mu * g2_term)
-    #H= np.clip(H, 1e-12, None)
-    #H *= positive_term / (negative_term[:, np.newaxis] + g2_term)
-    #write_log_file("update H \n")
     return H
 
 
@@ -267,9 +221,8 @@ def update_H(V, W, H, mu, seed_indices, MH_indices):
 def update_lambda(V, lambda_, W, MH_indices, seed_indices, W_max, eta):
     g1_val = g1(V, W, MH_indices, seed_indices, W_max)
     lambda_ = np.maximum(0, lambda_ + eta * g1_val)
-    #print("G1 values:", g1_val)
     lambda_[g1_val < 0] = 0
-    #write_log_file("update lamda \n")
+
     return lambda_
 
 
@@ -278,9 +231,7 @@ def update_mu(mu, H, seed_indices, theta_min, eta):
     g2_val_expanded = g2_val[:, np.newaxis]
     mu_update = mu + eta * g2_val_expanded
     mu = np.maximum(0, mu_update)
-    #print("G2 values: ", g2_val)
     mu[g2_val < 0] = 0
-    #write_log_file("update mu \n")
     return mu
 
 
