@@ -158,7 +158,7 @@ def update_W(V, W, H, lambda_, MH_indices, zero_seed_indices):
             g1_W[i, MH_indices] = 1
 
     W *= positive_term / (negative_term + lambda_ * g1_W)
-    W= np.clip(W, 1e-12, None)
+    #W= np.clip(W, 1e-12, None)
     return W
 
 
@@ -171,9 +171,10 @@ def update_H(V, W, H, mu, seed_indices, MH_indices):
     g2_term = np.zeros_like(H)
     for k in range(H.shape[0]):
         if k in MH_indices:
+            g2_term[k, :] = num[k] / (den[k] **2) 
             g2_term[k, seed_indices] = -((den[k] - num[k]) / (den[k] ** 2))
-    H *= positive_term / (negative_term + mu * g2_term)
-    H= np.clip(H, 1e-12, None)
+    H *= positive_term / (negative_term[:, np.newaxis] + mu * g2_term)
+    #H= np.clip(H, 1e-12, None)
     return H
 
 
