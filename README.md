@@ -23,10 +23,9 @@ Key Highlights:
 📦 Minority_Topic-Model
 │
 ├── data/                   → Synthetic datasets
-├── scripts/                → Topic modeling scripts
-├── Evaluation.py           → Evaluation script (NMI & Purity metrics)
-├── script.py               → CNMF main script
+├── Evaluation.py           → Evaluation script (NMI & Purity metrics across different methods)
+├── script.py               → main script
 ├── script-run.py           → Parameter configuration script
+├── sythtetic-data.csv      → Synthetic dataset
 ├── requirements.txt        → Python dependencies
-├── README.md               → Project documentation
-└── output/                 → Model outputs and results
+└── README.md               → Project documentation
