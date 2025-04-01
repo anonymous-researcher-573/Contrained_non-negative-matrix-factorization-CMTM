@@ -8,3 +8,4 @@ gensim
 top2vec
 corextopic
 numpy
+ssnmf
