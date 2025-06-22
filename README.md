@@ -28,7 +28,6 @@ Key Highlights:
 ---
 
 ## 📂 Project Structure
-
 ```plaintext
 📦 Minority_Topic-Model
 │
@@ -39,5 +38,39 @@ Key Highlights:
 ├── sythtetic-data.csv      → Synthetic dataset
 ├── requirements.txt        → Python dependencies
 └── README.md               → Project documentation
+```
 
+
+
+
+
+
+
+# 🚀 How to Run
+
+## 🔧 Step 1: Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+## 🧪 Step 2: Run the Main Training Script
+To train the model using the synthetic dataset:
+```bash
+python script.py --input sythtetic-data.csv
+```
+
+## ⚙️ Step 3: Run with Custom Parameters
+You can edit parameters inside script-run.py and then run it:
+```bash
+python script-run.py
+```
+
+## 📊 Step 4: Evaluate Model Performance
+To compute NMI and Purity across baseline methods:
+```bash
+python Evaluation.py
+```
+
+***This will:
+Compare model outputs to ground-truth labels and print or save metrics, also generate plots for evaluation.***
 
